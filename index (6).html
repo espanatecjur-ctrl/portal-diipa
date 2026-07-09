@@ -1,0 +1,332 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Portal DIIPA</title>
+<link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 100 100%22><text y=%22.9em%22 font-size=%2290%22>🏛️</text></svg>" />
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Sora:wght@600;700;800&display=swap" rel="stylesheet" />
+<style>
+  :root {
+    --navy: #0C2E66;
+    --navy-2: #1E50A0;
+    --aqua: #009B94;
+    --dorado: #C9A227;
+    --tinta: #1A2233;
+    --humo: #64748B;
+    --nube: #F4F6FA;
+  }
+  * { box-sizing: border-box; }
+  body {
+    margin: 0;
+    font-family: "Inter", system-ui, sans-serif;
+    background: var(--nube);
+    color: var(--tinta);
+    min-height: 100vh;
+  }
+  h1, h2, .display { font-family: "Sora", system-ui, sans-serif; }
+
+  /* ---------- pantalla de carga ---------- */
+  .centro {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+  }
+
+  /* ---------- login ---------- */
+  .login-fondo {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 24px;
+    background: linear-gradient(135deg, var(--navy) 0%, #103A3A 60%, #0C5C46 100%);
+  }
+  .login-card {
+    width: 100%;
+    max-width: 380px;
+    background: #fff;
+    border-radius: 20px;
+    padding: 36px 32px;
+    text-align: center;
+    box-shadow: 0 20px 50px rgba(0,0,0,.25);
+  }
+  .login-card .emoji { font-size: 48px; }
+  .login-card h1 { font-size: 22px; font-weight: 800; color: var(--navy); margin: 12px 0 2px; }
+  .login-card p.sub { color: var(--humo); font-size: 13px; margin: 0 0 24px; }
+  .btn-google {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    border: 1px solid #dadce0;
+    border-radius: 10px;
+    padding: 12px 16px;
+    font-size: 14px;
+    font-weight: 500;
+    background: #fff;
+    cursor: pointer;
+  }
+  .btn-google:hover { background: #f8f9fa; }
+  .btn-google img { height: 20px; width: 20px; }
+  .nota { font-size: 11px; color: var(--humo); margin-top: 14px; }
+
+  /* ---------- acceso restringido ---------- */
+  .restringido { text-align: center; max-width: 340px; }
+  .restringido button {
+    margin-top: 16px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    padding: 10px 18px;
+    background: #fff;
+    cursor: pointer;
+    font-size: 13px;
+  }
+
+  /* ---------- portal (logueado) ---------- */
+  .top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 18px 24px;
+    background: #fff;
+    border-bottom: 1px solid #E5E9F0;
+  }
+  .top .marca { display: flex; align-items: center; gap: 10px; }
+  .top .marca span.emoji { font-size: 22px; }
+  .top .marca b { font-family: "Sora", sans-serif; color: var(--navy); font-size: 16px; }
+  .top .quien { font-size: 12px; color: var(--humo); display: flex; align-items: center; gap: 10px; }
+  .top .quien button {
+    border: none;
+    background: none;
+    color: var(--navy-2);
+    font-size: 12px;
+    cursor: pointer;
+    text-decoration: underline;
+  }
+  main { max-width: 880px; margin: 0 auto; padding: 40px 24px 60px; }
+  main h2 { font-size: 20px; margin: 0 0 4px; color: var(--tinta); }
+  main p.intro { color: var(--humo); font-size: 14px; margin: 0 0 28px; }
+
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+    gap: 18px;
+  }
+  .card {
+    background: #fff;
+    border-radius: 16px;
+    padding: 22px;
+    border: 1px solid #E5E9F0;
+    cursor: pointer;
+    transition: transform .12s, box-shadow .12s;
+    text-align: left;
+  }
+  .card:hover { transform: translateY(-2px); box-shadow: 0 10px 24px rgba(12,46,102,.10); }
+  .card:disabled { opacity: .5; cursor: not-allowed; transform: none; box-shadow: none; }
+  .card .icono {
+    width: 44px; height: 44px;
+    border-radius: 12px;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 22px;
+    margin-bottom: 12px;
+  }
+  .card h3 { margin: 0 0 4px; font-size: 15px; font-weight: 700; color: var(--tinta); }
+  .card p { margin: 0; font-size: 12.5px; color: var(--humo); line-height: 1.4; }
+  .card .entrando { font-size: 12px; color: var(--aqua); font-weight: 600; margin-top: 10px; }
+
+  .error-msg {
+    background: #FEF2F2; color: #B91C1C; border: 1px solid #FCA5A5;
+    border-radius: 10px; padding: 10px 14px; font-size: 13px; margin-bottom: 18px;
+  }
+</style>
+</head>
+<body>
+
+<div id="app" class="centro">Cargando…</div>
+
+<script type="module">
+  // =====================================================================
+  //  PORTAL DIIPA — punto de entrada único
+  //  Un solo archivo, sin paso de build. Para cambiar algo, editas
+  //  directo aquí y vuelves a subir el archivo a GitHub.
+  // =====================================================================
+
+  // ---- Conexión al MISMO Supabase de autenticación que ya usan
+  //      JusticiaFácil y JurisConecta (no crear uno nuevo). ----
+  const AUTH_URL = "https://xzvtgjtumvwftulqxiao.supabase.co";
+  const AUTH_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inh6dnRnanR1bXZ3ZnR1bHF4aWFvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODE0NDU0NzUsImV4cCI6MjA5NzAyMTQ3NX0.W1CwPHCop68e0z_lCiX85EaIUoaJPG3huy2OjlZlSy4";
+  const DOMINIO_PERMITIDO = "diipadesarrollos.com";
+
+  // ---- A dónde le pega para pedir el código de traspaso de sesión ----
+  // (las 2 funciones que ya subiste a JurisConecta en la Fase 1)
+  const FUNCIONES_SSO = "https://jurisconecta.netlify.app/.netlify/functions";
+
+  // ---- Los sistemas que aparecen como tarjetas. Para agregar SIGA o
+  //      Contabilidad cuando existan, solo agregas otro objeto aquí. ----
+  const SISTEMAS = [
+    {
+      id: "jf",
+      nombre: "JusticiaFácil",
+      descripcion: "Casos jurídicos, dictámenes, cesiones y seguimiento de garantías.",
+      emoji: "⚖️",
+      color: "#0B1E3A",
+      url: "https://justiciafacil.netlify.app",
+    },
+    {
+      id: "jc",
+      nombre: "JurisConecta",
+      descripcion: "Conmutador, clientes, prospectos y chat interno del equipo.",
+      emoji: "📇",
+      color: "#1E50A0",
+      url: "https://jurisconecta.netlify.app",
+    },
+  ];
+
+  const app = document.getElementById("app");
+
+  let supabase;
+  async function getAuth() {
+    if (supabase) return supabase;
+    const mod = await import("https://esm.sh/@supabase/supabase-js@2");
+    supabase = mod.createClient(AUTH_URL, AUTH_KEY);
+    return supabase;
+  }
+
+  function correoPermitido(email) {
+    return !!email && email.toLowerCase().endsWith("@" + DOMINIO_PERMITIDO);
+  }
+
+  // ---------- pantallas ----------
+
+  function pintarLogin(auth) {
+    app.className = "login-fondo";
+    app.innerHTML = `
+      <div class="login-card">
+        <div class="emoji">🏛️</div>
+        <h1>Portal DIIPA</h1>
+        <p class="sub">Entra una vez, accede a todos tus sistemas</p>
+        <button class="btn-google" id="btnEntrar">
+          <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="" />
+          Entrar con Google
+        </button>
+        <p class="nota">Solo cuentas @${DOMINIO_PERMITIDO}</p>
+      </div>
+    `;
+    document.getElementById("btnEntrar").onclick = async () => {
+      await auth.auth.signInWithOAuth({
+        provider: "google",
+        options: { redirectTo: window.location.origin },
+      });
+    };
+  }
+
+  function pintarRestringido(auth, email) {
+    app.className = "centro";
+    app.innerHTML = `
+      <div class="restringido">
+        <p style="font-size:16px;font-weight:600;">Acceso restringido</p>
+        <p style="font-size:13px;color:var(--humo);margin-top:6px;">
+          Tu correo <b>${email}</b> no pertenece a <b>@${DOMINIO_PERMITIDO}</b>.
+        </p>
+        <button id="btnSalir">Cambiar de cuenta</button>
+      </div>
+    `;
+    document.getElementById("btnSalir").onclick = async () => {
+      await auth.auth.signOut();
+      location.reload();
+    };
+  }
+
+  function pintarPortal(auth, email) {
+    app.className = "";
+    document.body.style.minHeight = "100vh";
+    app.innerHTML = `
+      <div class="top">
+        <div class="marca"><span class="emoji">🏛️</span><b>Portal DIIPA</b></div>
+        <div class="quien">${email} <button id="btnSalir2">Salir</button></div>
+      </div>
+      <main>
+        <h2>Tus sistemas</h2>
+        <p class="intro">Elige a dónde quieres entrar. Vas a llegar con tu sesión ya iniciada.</p>
+        <div id="errorBox"></div>
+        <div class="grid" id="grid"></div>
+      </main>
+    `;
+    document.getElementById("btnSalir2").onclick = async () => {
+      await auth.auth.signOut();
+      location.reload();
+    };
+
+    const grid = document.getElementById("grid");
+    SISTEMAS.forEach((s) => {
+      const card = document.createElement("button");
+      card.className = "card";
+      card.innerHTML = `
+        <div class="icono" style="background:${s.color}22;">${s.emoji}</div>
+        <h3>${s.nombre}</h3>
+        <p>${s.descripcion}</p>
+      `;
+      card.onclick = () => entrarASistema(auth, s, card);
+      grid.appendChild(card);
+    });
+  }
+
+  function mostrarError(msg) {
+    const box = document.getElementById("errorBox");
+    if (box) box.innerHTML = `<div class="error-msg">${msg}</div>`;
+  }
+
+  async function entrarASistema(auth, sistema, card) {
+    card.disabled = true;
+    const original = card.innerHTML;
+    card.innerHTML = original + `<div class="entrando">Entrando…</div>`;
+    try {
+      const { data } = await auth.auth.getSession();
+      const session = data?.session;
+      if (!session) throw new Error("Sesión no encontrada, vuelve a entrar.");
+
+      const res = await fetch(`${FUNCIONES_SSO}/crear-sso`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          access_token: session.access_token,
+          refresh_token: session.refresh_token,
+        }),
+      });
+      if (!res.ok) throw new Error("No se pudo preparar el acceso a " + sistema.nombre);
+      const { code } = await res.json();
+
+      window.location.href = `${sistema.url}/sso?code=${encodeURIComponent(code)}`;
+    } catch (e) {
+      card.disabled = false;
+      card.innerHTML = original;
+      mostrarError((e && e.message) || `No se pudo entrar a ${sistema.nombre}. Intenta de nuevo.`);
+    }
+  }
+
+  // ---------- arranque ----------
+  (async () => {
+    const auth = await getAuth();
+    const { data } = await auth.auth.getSession();
+    const email = data?.session?.user?.email || null;
+
+    if (!email) { pintarLogin(auth); return; }
+    if (!correoPermitido(email)) { pintarRestringido(auth, email); return; }
+    pintarPortal(auth, email);
+
+    auth.auth.onAuthStateChange((_evt, session) => {
+      const e = session?.user?.email || null;
+      if (!e) pintarLogin(auth);
+      else if (!correoPermitido(e)) pintarRestringido(auth, e);
+      else pintarPortal(auth, e);
+    });
+  })();
+</script>
+</body>
+</html>
