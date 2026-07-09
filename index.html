@@ -302,7 +302,7 @@
       if (!res.ok) throw new Error("No se pudo preparar el acceso a " + sistema.nombre);
       const { code } = await res.json();
 
-      window.location.href = `${sistema.url}/sso?code=${encodeURIComponent(code)}`;
+      window.location.href = `${sistema.url}/?sso=${encodeURIComponent(code)}`;
     } catch (e) {
       card.disabled = false;
       card.innerHTML = original;
