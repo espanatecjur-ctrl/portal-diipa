@@ -299,7 +299,10 @@
           refresh_token: session.refresh_token,
         }),
       });
-      if (!res.ok) throw new Error("No se pudo preparar el acceso a " + sistema.nombre);
+      if (!res.ok) {
+        const detalle = await res.text().catch(() => "");
+        throw new Error(`No se pudo preparar el acceso a ${sistema.nombre}${detalle ? ": " + detalle : ""}`);
+      }
       const { code } = await res.json();
 
       window.location.href = `${sistema.url}/?sso=${encodeURIComponent(code)}`;
