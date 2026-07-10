@@ -26,7 +26,7 @@
     color: var(--tinta);
     min-height: 100vh;
   }
-  h1, h2, .display { font-family: "Sora", system-ui, sans-serif; }
+  h1, h2, h3, .display { font-family: "Sora", system-ui, sans-serif; }
 
   /* ---------- pantalla de carga ---------- */
   .centro {
@@ -51,12 +51,12 @@
     max-width: 380px;
     background: #fff;
     border-radius: 20px;
-    padding: 36px 32px;
+    padding: 40px 32px 32px;
     text-align: center;
     box-shadow: 0 20px 50px rgba(0,0,0,.25);
   }
-  .login-card .emoji { font-size: 48px; }
-  .login-card h1 { font-size: 22px; font-weight: 800; color: var(--navy); margin: 12px 0 2px; }
+  .login-card img.logo-login { height: 34px; margin-bottom: 18px; }
+  .login-card h1 { font-size: 20px; font-weight: 800; color: var(--navy); margin: 0 0 2px; }
   .login-card p.sub { color: var(--humo); font-size: 13px; margin: 0 0 24px; }
   .btn-google {
     width: 100%;
@@ -93,13 +93,12 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    padding: 18px 24px;
+    padding: 14px 24px;
     background: #fff;
     border-bottom: 1px solid #E5E9F0;
   }
   .top .marca { display: flex; align-items: center; gap: 10px; }
-  .top .marca span.emoji { font-size: 22px; }
-  .top .marca b { font-family: "Sora", sans-serif; color: var(--navy); font-size: 16px; }
+  .top .marca img { height: 24px; display: block; }
   .top .quien { font-size: 12px; color: var(--humo); display: flex; align-items: center; gap: 10px; }
   .top .quien button {
     border: none;
@@ -109,9 +108,106 @@
     cursor: pointer;
     text-decoration: underline;
   }
-  main { max-width: 880px; margin: 0 auto; padding: 40px 24px 60px; }
-  main h2 { font-size: 20px; margin: 0 0 4px; color: var(--tinta); }
-  main p.intro { color: var(--humo); font-size: 14px; margin: 0 0 28px; }
+  main { max-width: 960px; margin: 0 auto; padding: 32px 24px 60px; }
+
+  /* ---------- bienvenida (hero) ---------- */
+  .bienvenida {
+    position: relative;
+    border-radius: 22px;
+    overflow: hidden;
+    background: linear-gradient(120deg, var(--navy) 0%, #123A73 45%, #0C5C46 100%);
+    color: #fff;
+    padding: 38px 40px;
+    margin-bottom: 34px;
+    display: flex;
+    align-items: center;
+    gap: 36px;
+    box-shadow: 0 18px 40px rgba(12,46,102,.22);
+  }
+  .bienvenida::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background:
+      radial-gradient(600px 300px at 85% 15%, rgba(0,155,148,.35), transparent 60%),
+      radial-gradient(500px 260px at 10% 100%, rgba(201,162,39,.18), transparent 60%);
+    pointer-events: none;
+  }
+  .bienvenida-texto { position: relative; flex: 1 1 380px; min-width: 0; }
+  .bienvenida-texto img.logo-hero { height: 30px; margin-bottom: 22px; }
+  .bienvenida-texto h1 {
+    font-size: 26px;
+    line-height: 1.25;
+    margin: 0 0 6px;
+    font-weight: 800;
+    letter-spacing: .2px;
+  }
+  .bienvenida-texto p.saludo {
+    font-size: 14.5px;
+    color: #CFE0FF;
+    margin: 0 0 22px;
+    font-weight: 500;
+  }
+  .bienvenida-texto p.saludo b { color: #fff; }
+  .mv-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+    margin-bottom: 18px;
+  }
+  .mv-item {
+    background: rgba(255,255,255,.08);
+    border: 1px solid rgba(255,255,255,.14);
+    border-radius: 14px;
+    padding: 14px 16px;
+    backdrop-filter: blur(2px);
+  }
+  .mv-item span.etiqueta {
+    display: block;
+    font-size: 10.5px;
+    letter-spacing: .08em;
+    text-transform: uppercase;
+    color: var(--dorado);
+    font-weight: 700;
+    margin-bottom: 5px;
+  }
+  .mv-item p {
+    margin: 0;
+    font-size: 12.5px;
+    line-height: 1.5;
+    color: #EAF0FF;
+  }
+  .bienvenida-texto p.lema {
+    margin: 0;
+    font-size: 13px;
+    font-style: italic;
+    color: #FFE9AE;
+    border-left: 3px solid var(--dorado);
+    padding-left: 12px;
+  }
+  .bienvenida-img {
+    position: relative;
+    flex: 0 0 260px;
+    display: flex;
+    justify-content: center;
+  }
+  .bienvenida-img img {
+    width: 260px;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 16px;
+    box-shadow: 0 14px 34px rgba(0,0,0,.35);
+    border: 4px solid rgba(255,255,255,.15);
+  }
+  @media (max-width: 760px) {
+    .bienvenida { flex-direction: column; padding: 30px 24px; }
+    .bienvenida-img { order: -1; flex-basis: auto; }
+    .bienvenida-img img { width: 100%; max-width: 320px; height: 170px; }
+    .mv-grid { grid-template-columns: 1fr; }
+  }
+
+  main h2.titulo-sistemas { font-size: 18px; margin: 0 0 4px; color: var(--tinta); }
+  main p.intro { color: var(--humo); font-size: 13.5px; margin: 0 0 22px; }
 
   .grid {
     display: grid;
@@ -119,10 +215,12 @@
     gap: 18px;
   }
   .card {
+    position: relative;
     background: #fff;
     border-radius: 16px;
     padding: 22px;
     border: 1px solid #E5E9F0;
+    border-top: 3px solid var(--card-color, var(--navy));
     cursor: pointer;
     transition: transform .12s, box-shadow .12s;
     text-align: left;
@@ -130,12 +228,14 @@
   .card:hover { transform: translateY(-2px); box-shadow: 0 10px 24px rgba(12,46,102,.10); }
   .card:disabled { opacity: .5; cursor: not-allowed; transform: none; box-shadow: none; }
   .card .icono {
-    width: 44px; height: 44px;
+    width: 46px; height: 46px;
     border-radius: 12px;
     display: flex; align-items: center; justify-content: center;
-    font-size: 22px;
     margin-bottom: 12px;
+    background: color-mix(in srgb, var(--card-color, var(--navy)) 12%, #fff);
+    padding: 8px;
   }
+  .card .icono img { width: 100%; height: 100%; object-fit: contain; }
   .card h3 { margin: 0 0 4px; font-size: 15px; font-weight: 700; color: var(--tinta); }
   .card p { margin: 0; font-size: 12.5px; color: var(--humo); line-height: 1.4; }
   .card .entrando { font-size: 12px; color: var(--aqua); font-weight: 600; margin-top: 10px; }
@@ -174,7 +274,7 @@
       id: "jf",
       nombre: "JusticiaFácil",
       descripcion: "Casos jurídicos, dictámenes, cesiones y seguimiento de garantías.",
-      emoji: "⚖️",
+      logo: "assets/img/jf-icon.png",
       color: "#0B1E3A",
       url: "https://justiciafacil.netlify.app",
     },
@@ -182,11 +282,37 @@
       id: "jc",
       nombre: "JurisConecta",
       descripcion: "Conmutador, clientes, prospectos y chat interno del equipo.",
-      emoji: "📇",
+      logo: "assets/img/jc-icon.png",
       color: "#1E50A0",
       url: "https://jurisconecta.netlify.app",
     },
   ];
+
+  // ---- Nombre y rol principal de cada persona, según su correo. ----
+  // Agrega aquí a cada quien con su correo exacto de @diipadesarrollos.com.
+  // Si un correo no está en esta lista, se arma un nombre a partir del
+  // correo y se le pone el rol genérico "Equipo DIIPA".
+  const ROLES = {
+    "erikapaola@diipadesarrollos.com": { nombre: "Erika Paola España Méndez", rol: "Administradora Única · DGE" },
+    // "milton@diipadesarrollos.com":   { nombre: "Milton Castro",  rol: "Dirección Jurídica · DIL" },
+    // "luiscarlos@diipadesarrollos.com": { nombre: "Luis Carlos",  rol: "Dirección Comercial · DGC" },
+    // "jesus@diipadesarrollos.com":     { nombre: "Jesús",         rol: "Administración y Finanzas · GAD" },
+    // "jhon@diipadesarrollos.com":      { nombre: "Jhon Eduar",    rol: "Tecnología · DTR" },
+    // "michelle@diipadesarrollos.com":  { nombre: "Michelle",      rol: "Atención a Clientes · RAC" },
+  };
+
+  function datosDePersona(email) {
+    if (ROLES[email]) return ROLES[email];
+    const local = email.split("@")[0] || email;
+    const nombre = local
+      .replace(/[._]+/g, " ")
+      .trim()
+      .split(" ")
+      .filter(Boolean)
+      .map((w) => w.charAt(0).toUpperCase() + w.slice(1))
+      .join(" ");
+    return { nombre: nombre || email, rol: "Equipo DIIPA" };
+  }
 
   const app = document.getElementById("app");
 
@@ -208,7 +334,7 @@
     app.className = "login-fondo";
     app.innerHTML = `
       <div class="login-card">
-        <div class="emoji">🏛️</div>
+        <img class="logo-login" src="assets/img/ia-logo-color.png" alt="Inmuebles Accesibles" />
         <h1>Portal DIIPA</h1>
         <p class="sub">Entra una vez, accede a todos tus sistemas</p>
         <button class="btn-google" id="btnEntrar">
@@ -244,15 +370,39 @@
   }
 
   function pintarPortal(auth, email) {
+    const { nombre, rol } = datosDePersona(email);
+
     app.className = "";
     document.body.style.minHeight = "100vh";
     app.innerHTML = `
       <div class="top">
-        <div class="marca"><span class="emoji">🏛️</span><b>Portal DIIPA</b></div>
+        <div class="marca"><img src="assets/img/ia-logo-color.png" alt="Inmuebles Accesibles" /></div>
         <div class="quien">${email} <button id="btnSalir2">Salir</button></div>
       </div>
       <main>
-        <h2>Tus sistemas</h2>
+        <div class="bienvenida">
+          <div class="bienvenida-texto">
+            <img class="logo-hero" src="assets/img/ia-logo-light.png" alt="Inmuebles Accesibles" />
+            <h1>Bienvenido a DIIPA Desarrollos S.A. de C.V.</h1>
+            <p class="saludo">Hola, <b>${nombre}</b> — ${rol}</p>
+            <div class="mv-grid">
+              <div class="mv-item">
+                <span class="etiqueta">Misión</span>
+                <p>Convertir garantías hipotecarias en resultados justos y rentables, llevando cada expediente con un manejo 100% legal, ordenado y transparente.</p>
+              </div>
+              <div class="mv-item">
+                <span class="etiqueta">Visión</span>
+                <p>Ser la firma que cambió la forma de trabajar los remates en México: del lado de la ley, con datos claros y resultados reales.</p>
+              </div>
+            </div>
+            <p class="lema">Venimos a cambiar este negocio. Nadie más trabaja los remates de esta manera, tan legal.</p>
+          </div>
+          <div class="bienvenida-img">
+            <img src="assets/img/hero-foto.png" alt="DIIPA Desarrollos" />
+          </div>
+        </div>
+
+        <h2 class="titulo-sistemas">Tus sistemas</h2>
         <p class="intro">Elige a dónde quieres entrar. Vas a llegar con tu sesión ya iniciada.</p>
         <div id="errorBox"></div>
         <div class="grid" id="grid"></div>
@@ -267,8 +417,9 @@
     SISTEMAS.forEach((s) => {
       const card = document.createElement("button");
       card.className = "card";
+      card.style.setProperty("--card-color", s.color);
       card.innerHTML = `
-        <div class="icono" style="background:${s.color}22;">${s.emoji}</div>
+        <div class="icono"><img src="${s.logo}" alt="${s.nombre}" /></div>
         <h3>${s.nombre}</h3>
         <p>${s.descripcion}</p>
       `;
