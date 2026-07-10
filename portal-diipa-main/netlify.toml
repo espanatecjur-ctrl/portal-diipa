@@ -1,0 +1,4 @@
+[build]
+  publish = "."
+
+# No hay comando de build: es un solo archivo HTML, Netlify solo lo sirve.
